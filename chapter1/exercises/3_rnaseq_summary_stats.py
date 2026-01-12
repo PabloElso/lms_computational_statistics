@@ -138,7 +138,7 @@ plt.xticks(range(2), labels)
 plt.ylabel("Expression")
 plt.grid(True, alpha = 0.3)
 # plt.savefig("rnaseq_box.png", dpi = 300, bbox_inches = "tight")
-plt.show()
+# plt.show()
 
 # Violin plot
 plt.figure(figsize = (8, 5))
@@ -147,7 +147,7 @@ plt.xticks(range(2), labels)
 plt.ylabel("Expression")
 plt.grid(True, alpha = 0.3)
 # plt.savefig("rnaseq_violin.png", dpi = 300, bbox_inches = "tight")
-plt.show()
+# plt.show()
 
 # Histogram
 
@@ -170,4 +170,4 @@ plt.ylabel("Frequency")
 plt.legend()
 plt.grid(True, alpha = 0.3)
 # plt.savefig("rnaseq_histogram.png", dpi = 300, bbox_inches = "tight")
-plt.show()
+# plt.show()

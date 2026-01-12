@@ -45,7 +45,7 @@ plt.xlabel("Value")
 plt.ylabel("Frequency")
 plt.grid(True, alpha = 0.3)
 # plt.savefig("data_histogram.png", dpi = 300, bbox_inches = "tight")
-plt.show()
+# plt.show()
 
 # Plot data as box plot
 plt.figure(figsize = (8, 5))
@@ -54,7 +54,7 @@ plt.title("Box plot of simulated data")
 plt.ylabel("Value")
 plt.grid(True, alpha = 0.3)
 # plt.savefig("data_box.png", dpi = 300, bbox_inches = "tight")
-plt.show()
+# plt.show()
 
 # Plot data as violin plot
 plt.figure(figsize = (8, 5))
@@ -63,7 +63,7 @@ plt.title("Violin plot of simulated data")
 plt.ylabel("Value")
 plt.grid(True, alpha = 0.3)
 # plt.savefig("data_violin.png", dpi = 300, bbox_inches = "tight")
-plt.show()
+# plt.show()
 
 
 

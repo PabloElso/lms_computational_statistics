@@ -139,7 +139,7 @@ plt.xticks(range(2), labels)
 plt.ylabel("Score")
 plt.grid(True, alpha = 0.3)
 # plt.savefig("emseq_box.png", dpi = 300, bbox_inches = "tight")
-plt.show()
+# plt.show()
 
 # Violin plot
 plt.figure(figsize = (8, 5))
@@ -148,7 +148,7 @@ plt.xticks(range(2), labels)
 plt.ylabel("Score")
 plt.grid(True, alpha = 0.3)
 # plt.savefig("emseq_violin.png", dpi = 300, bbox_inches = "tight")
-plt.show()
+# plt.show()
 
 # Histogram
 
@@ -171,4 +171,4 @@ plt.ylabel("Frequency")
 plt.legend()
 plt.grid(True, alpha = 0.3)
 # plt.savefig("emseq_histogram.png", dpi = 300, bbox_inches = "tight")
-plt.show()
+# plt.show()
