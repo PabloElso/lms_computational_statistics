@@ -17,13 +17,13 @@ ICL email address `jurtasun@ic.ac.uk`
 Sample mean
 ```markdown
 $$
-	\bar{x} = \frac{1}{n} \sum_{i = 1}^{n} x_{i} \; .
+\bar{x} = \frac{1}{n} \sum_{i = 1}^{n} x_{i} \; .
 $$
 ```
 
 Sample variance
 ```markdown
 $$
-    s^2 = \frac{1}{n - 1} \sum_{i = 1}^{N} (x_{i} - \bar{x})^{2} \; ,
+s^2 = \frac{1}{n - 1} \sum_{i = 1}^{N} (x_{i} - \bar{x})^{2} \; ,
 $$
 ```
