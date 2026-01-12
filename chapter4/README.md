@@ -16,29 +16,21 @@ ICL email address `jurtasun@ic.ac.uk`
 
 
 t-statistic one sample
-```latex
-\begin{equation}
+$$
     t = \dfrac{\bar{x} - \mu}{s/\sqrt{n}} \; .
-\end{equation}
-```
+$$
 
 t-statistic two sample
-```latex
-\begin{equation}
+$$
     t = \dfrac{\bar{x}_1 - \bar{x}_2}{\sqrt{\dfrac{s_1^2}{n_1} + \dfrac{s_2^2}{n_2 }}} \; .
-\end{equation}
-```
+$$
 
 Fisher statistic
-```latex
-\begin{equation}
+$$
     F = \dfrac{s_1^2}{s_2^2} \; .
-\end{equation}
-```
+$$
 
 &chi;<sup>2</sup>-statistic
-```latex
-\begin{equation}
+$$
     \chi^2 = \sum_{i=1}^{k} \frac{(O_i - E_i)^2}{E_i}
-\end{equation}
-```
+$$
