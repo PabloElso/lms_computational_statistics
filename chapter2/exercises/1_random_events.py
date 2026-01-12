@@ -5,7 +5,9 @@
 
 
 # Exercise 1: 
+
 # Implement a manual calculation of the Bernoulli, Binomial, Poisson and Gaussian probabilty
+
 # Check calculation with numpy / scipy implementation
 
 

@@ -6,15 +6,13 @@
 
 # Exercise 3: 
 
-# 1. Read expression data from RNA-seq experiment
-# Compute log transformed counts log(counts + 1)
-# Average counts per replicate
+# 1. Read expression data from RNA-seq experiment. Compute log transformed counts log(counts + 1) and average counts per replicate
 
-# 2. Implement a manual computation of mean, median, variance and std
-# Check calculation with numpy / scipy implementation
+# 2. Implement manual computation of mean, median, variance and std
 
-# 3. Plot data as a box plot, violin and histogram
-# Plot statistics summary on top of the histogram
+# 3. Compare with numpy / scipy implementation
+
+# 4. Plot data as a box plot, violin and histogram, and plot summary statistics on top of the histogram
 
 
 
@@ -49,65 +47,75 @@ exp_200uM = rnaseq_200uM.values.flatten()
 # Compute mean value ..........................................................
 
 # Manual calculation
-def mean_manual(x):
-    return sum(x) / len(x)
+def compute_mean(data):
+    
+    return sum(data) / len(data)
 
 # Check implementation
 print("\nMean value")
-print("3uM (manual):", mean_manual(exp_3uM))
+print("3uM (manual):", compute_mean(exp_3uM))
 print("3uM (Numpy):", np.mean(exp_3uM))
-print("200uM (manual):", mean_manual(exp_200uM))
-print("200uM (Numpy):", np.mean(exp_200uM))
+print("200uM deprived (manual):", compute_mean(exp_200uM))
+print("200uM deprived (Numpy):", np.mean(exp_200uM))
+
 
 
 # Compute variance ............................................................
 
 # Manual calculation
-def var_manual(x):
-    m = mean_manual(x)
-    return sum((xi - m)**2 for xi in x) / len(x)
+def compute_var(data):
+
+    mean_val = compute_mean(data)
+    squared_diffs = [(x - mean_val) ** 2 for x in data]
+
+    return sum(squared_diffs) / len(data) # population variance
+    # return sum(squared_diffs) / (len(data) - 1)  # sample variance
 
 # Check implementation
 print("\nVariance")
-print("3uM (manual):", var_manual(exp_3uM))
+print("3uM (manual):", compute_var(exp_3uM))
 print("3uM (Numpy):", np.var(exp_3uM))
-print("200uM (manual):", var_manual(exp_200uM))
-print("200uM (Numpy):", np.var(exp_200uM))
+print("200uM deprived (manual):", compute_var(exp_200uM))
+print("200uM deprived (Numpy):", np.var(exp_200uM))
 
 
 
 # Compute median ..............................................................
 
 # Manual calculation
-def median_manual(x):
-    s = sorted(x)
-    n = len(s)
-    mid = n // 2
+def compute_median(data):
+
+    # Sort data and find middle point
+    sorted_data = sorted(data)
+    n = len(sorted_data)
+    middle = n // 2 # integer division, divide and round
+    
+    # Check if even / odd data
     if n % 2 == 0:
-        return (s[mid-1] + s[mid]) / 2
-    return s[mid]
+        return (sorted_data[middle - 1] + sorted_data[middle]) / 2
+    else:
+        return sorted_data[middle]
 
 # Check implementation
 print("\nMedian")
-print("3uM (manual):", median_manual(exp_3uM))
+print("3uM (manual):", compute_median(exp_3uM))
 print("3uM (Numpy):", np.median(exp_3uM))
-print("200uM (manual):", median_manual(exp_200uM))
-print("200uM (Numpy):", np.median(exp_200uM))
+print("200uM deprived (manual):", compute_median(exp_200uM))
+print("200uM deprived (Numpy):", np.median(exp_200uM))
 
 
-
-# Compute std .................................................................
 
 # Manual calculation
-def std_manual(x):
-    return var_manual(x)**0.5
+def compute_std(data):
+
+    return compute_var(data) ** 0.5
 
 # Check implementation
 print("\nStandard deviation")
-print("3uM (manual):", std_manual(exp_3uM))
+print("3uM (manual):", compute_std(exp_3uM))
 print("3uM (Numpy):", np.std(exp_3uM))
-print("200uM (manual):", std_manual(exp_200uM))
-print("200uM (Numpy):", np.std(exp_200uM))
+print("200uM deprived (manual):", compute_std(exp_200uM))
+print("200uM deprived (Numpy):", np.std(exp_200uM))
 
 
 
@@ -130,7 +138,7 @@ plt.xticks(range(2), labels)
 plt.ylabel("Expression")
 plt.grid(True, alpha = 0.3)
 # plt.savefig("rnaseq_box.png", dpi = 300, bbox_inches = "tight")
-# plt.show()
+plt.show()
 
 # Violin plot
 plt.figure(figsize = (8, 5))
@@ -139,13 +147,13 @@ plt.xticks(range(2), labels)
 plt.ylabel("Expression")
 plt.grid(True, alpha = 0.3)
 # plt.savefig("rnaseq_violin.png", dpi = 300, bbox_inches = "tight")
-# plt.show()
+plt.show()
 
 # Histogram
 
 # Extract mean per group
-m_3uM = mean_manual(samples[0])
-m_200uM = mean_manual(samples[1])
+m_3uM = compute_mean(samples[0])
+m_200uM = compute_mean(samples[1])
 
 # Prepare binsize
 all_data = np.concatenate(samples)
@@ -162,4 +170,4 @@ plt.ylabel("Frequency")
 plt.legend()
 plt.grid(True, alpha = 0.3)
 # plt.savefig("rnaseq_histogram.png", dpi = 300, bbox_inches = "tight")
-# plt.show()
+plt.show()

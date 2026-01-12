@@ -6,15 +6,13 @@
 
 # Exercise 2: 
 
-# 1. Read expression data from EM-seq experiment
-# Compute methylation score s = nC / (nC + nT)
-# Average score per replicate
+# 1. Read expression data from EM-seq experiment. Compute methylation score s = nC / (nC + nT) and average per replicate
 
-# 2. Implement a manual computation of mean, median, variance and std
-# Check calculation with numpy / scipy implementation
+# 2. Implement manual computation of mean, median, variance and std
 
-# 3. Plot data as a box plot, violin and histogram
-# Plot statistics summary on top of the histogram
+# 3. Compare with numpy / scipy implementation
+
+# 4. Plot data as a box plot, violin and histogram, and plot summary statistics on top of the histogram
 
 
 
@@ -53,65 +51,78 @@ score_200uM = (s_200uM_rep1 + s_200uM_rep2) / 2
 # Compute mean value ..........................................................
 
 # Manual calculation
-def mean_manual(x):
-    return sum(x) / len(x)
+def compute_mean(data):
+    
+    return sum(data) / len(data)
 
 # Check implementation
 print("\nMean value")
-print("3uM (manual):", mean_manual(score_3uM.values))
-print("3uM (Numpy):", np.mean(score_3uM.values))
-print("200uM (manual):", mean_manual(score_200uM.values))
-print("200uM (Numpy):", np.mean(score_200uM.values))
+print("3uM control (manual):", compute_mean(score_3uM.values))
+print("3uM control (Numpy):", np.mean(score_3uM.values))
+print("200uM deprived (manual):", compute_mean(score_200uM.values))
+print("200uM deprived (Numpy):", np.mean(score_200uM.values))
+
 
 
 # Compute variance ............................................................
 
 # Manual calculation
-def var_manual(x):
-    m = mean_manual(x)
-    return sum((xi - m)**2 for xi in x) / len(x)
+def compute_var(data):
+
+    mean_val = compute_mean(data)
+    squared_diffs = [(x - mean_val) ** 2 for x in data]
+
+    return sum(squared_diffs) / len(data) # population variance
+    # return sum(squared_diffs) / (len(data) - 1)  # sample variance
 
 # Check implementation
 print("\nVariance")
-print("3uM (manual):", var_manual(score_3uM.values))
-print("3uM (Numpy):", np.var(score_3uM.values))
-print("200uM (manual):", var_manual(score_200uM.values))
-print("200uM (Numpy):", np.var(score_200uM.values))
+print("3uM control (manual):", compute_var(score_3uM.values))
+print("3uM control (Numpy):", np.var(score_3uM.values))
+print("200uM deprived (manual):", compute_var(score_200uM.values))
+print("200uM deprived (Numpy):", np.var(score_200uM.values))
 
 
 
 # Compute median ..............................................................
 
 # Manual calculation
-def median_manual(x):
-    s = sorted(x)
-    n = len(s)
-    mid = n // 2
+def compute_median(data):
+
+    # Sort data and find middle point
+    sorted_data = sorted(data)
+    n = len(sorted_data)
+    middle = n // 2 # integer division, divide and round
+    
+    # Check if even / odd data
     if n % 2 == 0:
-        return (s[mid-1] + s[mid]) / 2
-    return s[mid]
+        return (sorted_data[middle - 1] + sorted_data[middle]) / 2
+    else:
+        return sorted_data[middle]
 
 # Check implementation
 print("\nMedian")
-print("3uM (manual):", median_manual(score_3uM.values))
-print("3uM (Numpy):", np.median(score_3uM.values))
-print("200uM (manual):", median_manual(score_200uM.values))
-print("200uM (Numpy):", np.median(score_200uM.values))
+print("3uM control (manual):", compute_median(score_3uM.values))
+print("3uM control (Numpy):", np.median(score_3uM.values))
+print("200uM deprived (manual):", compute_median(score_200uM.values))
+print("200uM deprived (Numpy):", np.median(score_200uM.values))
 
 
 
 # Compute std .................................................................
 
 # Manual calculation
-def std_manual(x):
-    return var_manual(x)**0.5
+def compute_std(data):
+    var = compute_var(data)
+    return var ** 0.5
+
 
 # Check implementation
 print("\nStandard deviation")
-print("3uM (manual):", std_manual(score_3uM.values))
-print("3uM (Numpy):", np.std(score_3uM.values))
-print("200uM (manual):", std_manual(score_200uM.values))
-print("200uM (Numpy):", np.std(score_200uM.values))
+print("3uM control (manual):", compute_std(score_3uM.values))
+print("3uM control (Numpy):", np.std(score_3uM.values))
+print("200uM deprived (manual):", compute_std(score_200uM.values))
+print("200uM deprived (Numpy):", np.std(score_200uM.values))
 
 
 
@@ -128,7 +139,7 @@ plt.xticks(range(2), labels)
 plt.ylabel("Score")
 plt.grid(True, alpha = 0.3)
 # plt.savefig("emseq_box.png", dpi = 300, bbox_inches = "tight")
-# plt.show()
+plt.show()
 
 # Violin plot
 plt.figure(figsize = (8, 5))
@@ -137,13 +148,13 @@ plt.xticks(range(2), labels)
 plt.ylabel("Score")
 plt.grid(True, alpha = 0.3)
 # plt.savefig("emseq_violin.png", dpi = 300, bbox_inches = "tight")
-# plt.show()
+plt.show()
 
 # Histogram
 
 # Extract mean per group
-mean_3uM = mean_manual(samples[0])
-mean_200uM = mean_manual(samples[1])
+mean_3uM = compute_mean(samples[0])
+mean_200uM = compute_mean(samples[1])
 
 # Prepare binsize
 all_data = np.concatenate(samples)
@@ -160,4 +171,4 @@ plt.ylabel("Frequency")
 plt.legend()
 plt.grid(True, alpha = 0.3)
 # plt.savefig("emseq_histogram.png", dpi = 300, bbox_inches = "tight")
-# plt.show()
+plt.show()

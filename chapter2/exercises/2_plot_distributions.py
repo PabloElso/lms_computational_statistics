@@ -5,7 +5,9 @@
 
 
 # Exercise 1: 
+
 # Represent the PMF of the Bernoulli, Binomial and Poisson distribution
+
 # Represent the PDF of the Gaussian distribution
 
 
